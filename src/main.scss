@@ -1,0 +1,60 @@
+// Import Bulma's Variables
+@import "~bulma/sass/utilities/_all";
+
+// Set your colors
+$light: #f4f8fb;
+$light-invert: findColorInvert($light);
+$dark: #3a4651;
+$dark-invert: findColorInvert($dark);
+$black: #222;
+
+$primary: #7957d5;
+$info: #9A2CE3;
+$warning: #FDB43E;
+$success: #99bf38;
+
+$twitter: #4099FF;
+$twitter-invert: findColorInvert($twitter);
+
+// Setup $colors to use as bulma classes (e.g. 'is-twitter')
+$colors: (
+  "white": ($white, $black),
+  "black": ($black, $white),
+  "light": ($light, $light-invert),
+  "dark": ($dark, $dark-invert),
+  "primary": ($primary, $primary-invert),
+  "info": ($info, $info-invert),
+  "success": ($success, $success-invert),
+  "warning": ($warning, $warning-invert),
+  "danger": ($danger, $danger-invert),
+  "twitter": ($twitter, $twitter-invert)
+);
+
+// Links
+$link: $primary;
+$link-invert: $primary-invert;
+$link-focus-border: $primary;
+
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
+
+
+//// Custom App Components
+//
+//
+//
+
+// Spacing helpers
+.mb-1 {
+	margin-bottom: 1rem;
+}
+
+.pa-1 {
+	padding: 1rem;
+}
+
+// Typography
+.is-bold {
+	font-weight: 600;
+}
