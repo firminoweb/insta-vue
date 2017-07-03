@@ -44,17 +44,5 @@ $link-focus-border: $primary;
 //
 //
 //
-
-// Spacing helpers
-.mb-1 {
-	margin-bottom: 1rem;
-}
-
-.pa-1 {
-	padding: 1rem;
-}
-
-// Typography
-.is-bold {
-	font-weight: 600;
-}
+@import "assets/scss/helpers";
+@import "assets/scss/profile";

@@ -1,43 +1,60 @@
 <template>
-  <section class="hero is-info is-fullheight">
-
-<!--     <div class="hero-head">
-      <header class="nav">
-        <div class="container">
-          <div class="nav-center">
-            <a class="nav-item">
-              <img src="static/img/instagram-logo-white.png" alt="Logo">
+  <div>
+    <nav class="nav has-shadow" id="top">
+      <div class="container">
+        <div class="nav-left">
+          <a class="nav-item" href="/">
+            <img :src="appLogo" alt="Description">
+          </a>
+        </div>
+        <div class="nav-right">
+          <span class="nav-item">
+          </span>
+          <span class="nav-item">
+            <a class="button is-danger">
+              Log Out
             </a>
-          </div>
+          </span>
         </div>
-      </header>
-    </div> -->
+      </div>
+    </nav>
 
-    <div class="hero-body">
-      <div class="container">
+    <div class="container profile">
 
+      <div class="section profile-heading mb-1">
         <div class="columns">
-          <div class="column is-mobile is-half-tablet is-half-desktop is-offset-one-quarter">
-
-            <div class="box">
-
-            <p>Homee</p>
+          <div class="column is-2">
+            <div class="image is-128x128 avatar">
+              <img :src="user.userAvatar">
             </div>
-
+          </div>
+          <div class="column is-4 name">
+            <p>
+              <span class="title is-bold">{{user.userFullName}}</span>
+            </p>
+            <p class="tagline">{{user.userBio}}</p>
+          </div>
+          <div class="column is-2 followers has-text-centered">
+            <p class="stat-val">{{user.userFollowers}}</p>
+            <p class="stat-key">seguidores</p>
+          </div>
+          <div class="column is-2 following has-text-centered">
+            <p class="stat-val">{{user.userFollows}}</p>
+            <p class="stat-key">seguindo</p>
+          </div>
+          <div class="column is-2 likes has-text-centered">
+            <p class="stat-val">{{user.userPosts}}</p>
+            <p class="stat-key">posts</p>
           </div>
         </div>
-
       </div>
-    </div>
 
-    <div class="hero-foot pa-1">
-      <div class="container">
-        <div class="content has-text-centered">
-          <p class="has-text-white">© 2017 Instagram</p>
-        </div>
+      <div class="box">
+      aa
       </div>
+
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -51,19 +68,34 @@
     name: 'home',
     data () {
       return {
-        msg: 'Home'
+        msg: 'Home',
+        appLogo: 'static/img/instagram-logo-black.png',
+        accessToken: null,
+        user: {
+          userId: null,
+          userAvatar: null,
+          userFullName: null,
+          userBio: null,
+          userFollowers: null,
+          userFollows: null,
+          userPosts: null
+        }
       }
     },
     beforeCreate () {
       let hash = window.location.hash
-      let accessToken = hash.split('=')[1]
-      verifyUser(accessToken)
+      this.accessToken = hash.split('=')[1]
+      verifyUser(this.accessToken, this)
       // if () {
 
       // }
     },
+    mounted () {
+      console.log('mounted: ', this.user.userId)
+    },
     methods: {
-      preventer
+      preventer,
+      verifyUser
     }
   }
 </script>
