@@ -41,14 +41,31 @@
 </template>
 
 <script>
-export default {
-  name: 'home',
-  data () {
-    return {
-      msg: 'Home'
+  // Import Methods
+  import {
+    preventer,
+    verifyUser
+  } from '../utils/methods'
+
+  export default {
+    name: 'home',
+    data () {
+      return {
+        msg: 'Home'
+      }
+    },
+    beforeCreate () {
+      let hash = window.location.hash
+      let accessToken = hash.split('=')[1]
+      verifyUser(accessToken)
+      // if () {
+
+      // }
+    },
+    methods: {
+      preventer
     }
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

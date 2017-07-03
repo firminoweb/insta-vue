@@ -13,7 +13,7 @@
 
             <div class="box">
 
-              <a class="button is-primary is-fullwidth is-medium mb-1">
+              <a class="button is-primary is-fullwidth is-medium mb-1" @click="instaLogin">
                 <b-icon icon="person" size="is-medium"></b-icon>
                 <span>Log in with {{appName}}</span>
               </a>
@@ -49,7 +49,8 @@
 <script>
   // Import Methods
   import {
-    preventer
+    preventer,
+    instaLogin
   } from '../utils/methods'
 
   export default {
@@ -65,7 +66,8 @@
       }
     },
     methods: {
-      preventer
+      preventer,
+      instaLogin
     }
   }
 </script>

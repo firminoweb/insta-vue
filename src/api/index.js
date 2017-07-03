@@ -1,10 +1,11 @@
 //* App API *//
 import axios from 'axios'
 
+export const baseURL = 'https://api.instagram.com/v1'
+
 export const HTTP = axios.create({
-  baseURL: 'http://jsonplaceholder.typicode.com/',
+  baseURL: baseURL,
   headers: {
-    Authorization: 'Bearer {token}',
     'Content-Type': 'application/json'
   }
 })
