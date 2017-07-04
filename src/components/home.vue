@@ -11,7 +11,7 @@
           <span class="nav-item">
           </span>
           <span class="nav-item">
-            <a class="button is-danger">
+            <a class="button is-danger" @click="logout">
               Log Out
             </a>
           </span>
@@ -61,8 +61,11 @@
   // Import Methods
   import {
     preventer,
-    verifyUser
+    verifyUser,
+    logout
   } from '../utils/methods'
+
+  import UserStore from '../services/user'
 
   export default {
     name: 'home',
@@ -83,19 +86,22 @@
       }
     },
     beforeCreate () {
-      let hash = window.location.hash
-      this.accessToken = hash.split('=')[1]
-      verifyUser(this.accessToken, this)
+      verifyUser(localStorage.getItem('token'), this)
       // if () {
 
       // }
+      console.log(UserStore.getItem('token'))
     },
     mounted () {
-      console.log('mounted: ', this.user.userId)
+      // if (UserStore.get('app')) {
+      //   console.log('ssss')
+      //   UserStore.remove('app')
+      // }
     },
     methods: {
       preventer,
-      verifyUser
+      verifyUser,
+      logout
     }
   }
 </script>

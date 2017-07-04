@@ -53,6 +53,8 @@
     instaLogin
   } from '../utils/methods'
 
+  // import UserStore from '../services/user'
+
   export default {
     name: 'login',
     data () {
@@ -64,6 +66,13 @@
         resetBtn: 'Reset',
         resetTxt: 'Forgot Password?'
       }
+    },
+    mounted () {
+      // if (!UserStore.get('to')) {
+      //   UserStore.add('to')
+      // }
+
+      // console.log(UserStore._data[0] === 'to')
     },
     methods: {
       preventer,

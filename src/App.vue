@@ -3,8 +3,11 @@
 </template>
 
 <script>
+  // import UserStore from './services/user'
+
   export default {
-    name: 'app'
+    name: 'app',
+    mounted () {}
   }
 </script>
 

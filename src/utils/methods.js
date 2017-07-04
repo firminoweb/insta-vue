@@ -1,6 +1,7 @@
 //* App Methods *//
 import { baseURL } from '../api'
 import route from '../router'
+import UserStore from '../services/user'
 var jsonp = require('jsonp')
 // import qs from 'qs'
 
@@ -11,28 +12,19 @@ export function preventer () {
 
 export function instaLogin () {
   let clientid = 'dc0f03d7620e49f2920315a8efd26b90'
-  let redirecturi = 'http://localhost:8080'
+  let redirecturi = 'http://localhost:8080/auth'
   let responsetype = 'token'
   let scope = 'public_content'
 
   window.location = 'https://www.instagram.com/oauth/authorize/?client_id=' + clientid + '&redirect_uri=' + redirecturi + '&response_type=' + responsetype + '&scope=' + scope
 }
 
-export function verifyUser (access, context) {
-  // let vm = this
-  // HTTP.get('/users/self/?access_token=' + access + '&callback=?')
-  // .then(function (response) {
-  //   console.log('response: ', response)
-  // })
-  // .catch(function (error) {
-  //   console.log('Erro: ', error)
-  // })
-  // console.log(this.$route)
-  // let paccess = access
-  // jsonp(baseURL + '/users/self/?access_token=' + access + '&callback=').then(res => {
-  //   console.log(res)
-  // })
+export function logout () {
+  UserStore.removeItem('token')
+  route.push('login')
+}
 
+export function verifyUser (access, context) {
   jsonp(baseURL + '/users/self/?access_token=' + access + '&callback=', null, (err, res) => {
     if (err) {
       console.error(err.message)
@@ -49,7 +41,6 @@ export function verifyUser (access, context) {
         console.log(res.data)
       } else {
         console.log('Não está logado!')
-        route.push('login')
       }
     }
   })
