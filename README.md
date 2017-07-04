@@ -2,27 +2,50 @@
 
 > Projeto teste de Vuejs consumindo API do Instagram
 
-## Build Setup
+## Configurações de produção
 
 ``` bash
-# install dependencies
+# instalar as dependências
 npm install
 
-# serve with hot reload at localhost:8080
+# executar a versão Dev em localhost:8080
 npm run dev
 
-# build for production with minification
+# gerar uma build para produção com minificação
 npm run build
 
-# build for production and view the bundle analyzer report
+# gerar uma build para produção e bundle analyzer report
 npm run build --report
 
-# run unit tests
+# executar local a build gerada em localhost:3000
+npm run prod
+
+# executar testes unitários
 npm run unit
 
-# run e2e tests
+# executar testes e2e
 npm run e2e
 
-# run all tests
+# executar todos os testes
 npm test
 ```
+
+## Features
+* Vuejs
+* Vue Router
+* Vue Cli
+* Vue Loader (webpack)
+* Bulma CSS
+* Buefy (Bulma + Vue)
+* Webpack
+* PWA
+* ESLint
+* Lite Server (executar build local)
+
+## Integração Contínua
+Este teste está integrado com o serviço [Netlify](https://netlify.com), serviço especializado em SPA's
+
+* https://instavue.netlify.com
+
+###### observação:
+O prerender do Netlify pode não executar corretamente esta SPA por questões de cache e pelo fato de ser um plano gratuito.
