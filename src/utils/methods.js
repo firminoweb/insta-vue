@@ -4,6 +4,10 @@ import route from '../router'
 import UserStore from '../services/user'
 var jsonp = require('jsonp')
 
+const token = UserStore.getItem('token')
+const lati = UserStore.getItem('latitude')
+const long = UserStore.getItem('longitude')
+
 // @Utils Methods
 export function preventer () {
   return false
@@ -25,7 +29,7 @@ export function instaLogin () {
 
 export function logout () {
   UserStore.removeItem('token')
-  route.push('login')
+  route.push('/login')
 }
 
 export function verifyUser (access, context) {
@@ -45,7 +49,7 @@ export function verifyUser (access, context) {
 }
 
 export function myLastPosts (access, context) {
-  jsonp(baseURL + '/users/self/media/recent/?count=5&access_token=' + access + '&callback=', null, (err, res) => {
+  jsonp(baseURL + '/users/self/media/recent/?count=&access_token=' + access + '&callback=', null, (err, res) => {
     if (err) {
       console.error(err.message)
     } else {
@@ -54,4 +58,32 @@ export function myLastPosts (access, context) {
     }
   })
   // https://api.instagram.com/v1/users/self/media/recent/?count=5&access_token=20644171.dc0f03d.a986f2a34b964a709fd0105cf711bff6
+}
+
+export function updateAreaPosts (dist) {
+  this.areaPosts(token, lati, long, dist, this)
+}
+
+export function areaPosts (access, lat, lng, dist, context) {
+  jsonp(baseURL + '/media/search?lat=' + lat + '&lng=' + lng + '&distance=' + dist + '&access_token=' + access + '&callback=', null, (err, res) => {
+    if (err) {
+      console.error(err.message)
+    } else {
+      context.arPosts = res.data
+      console.log(res.data)
+    }
+  })
+}
+
+export function searchTags (access, tag, context) {
+  jsonp(baseURL + '/tags/search?q=' + tag + '&access_token=' + access + '&callback=', null, (err, res) => {
+    if (err) {
+      console.error(err.message)
+    } else {
+      context.seTags = res.data
+      console.log('tags: ', res.data)
+    }
+  })
+  // https://api.instagram.com/v1/tags/search?q=snowy&
+  // https://api.instagram.com/v1/tags/{tag-name}/media/recent?access_token=ACCESS-TOKEN
 }

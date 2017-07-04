@@ -9,6 +9,18 @@
         </div>
         <div class="nav-right">
           <span class="nav-item">
+            <div class="field has-addons">
+              <p class="control">
+                <input class="input" type="text" v-model="tagInput" placeholder="Buscar Tag">
+              </p>
+              <p class="control">
+                <a class="button is-primary" :href="/tag/ + tagInput">
+                  <b-icon
+                      icon="search">
+                  </b-icon>
+                </a>
+              </p>
+            </div>
           </span>
           <span class="nav-item">
             <a class="button is-danger" @click="logout">
@@ -55,9 +67,22 @@
         <div class="column">
 
           <div class="box">
-            <h2 class="title is-bold">Seus últimos posts</h2>
+            <h2 class="is-spaced title">
+              Seus últimos posts
+            </h2>
 
-            <div class="card mb-1" v-for="post in myPosts">
+            <hr>
+
+            <b-field>
+                <b-select v-model="qtsMyPosts" placeholder="Quantidade" icon="dashboard">
+                  <option value="15" selected>5 Posts</option>
+                  <option value="10">10 Posts</option>
+                  <option value="5">15 Posts</option>
+                  <option value="0">20 Posts</option>
+                </b-select>
+            </b-field>
+
+            <div class="card mb-1" v-for="(post, index) in myPosts" v-if="index < (myPosts.length - qtsMyPosts)">
               <div class="card-image">
                 <figure class="image is-4by3">
                   <img :src="post.images.standard_resolution.url" alt="Image">
@@ -65,9 +90,9 @@
               </div>
               <div class="card-content">
                 <div class="content">
-                  <p>{{post.caption.text}}</p>
+                  <p v-if="post.caption">{{post.caption.text}}</p>
                   <p class="is-light">
-                    <small class="is-primary">
+                    <small class="is-primary" v-if="post.location">
                       <b-icon icon="location_city" size="is-small" type="is-primary"></b-icon> {{post.location.name}}</small> | 
                     <small>
                       <b-icon icon="date_range" size="is-small" type="is-primary"></b-icon> {{ parseInstaDate(post.created_time) }}
@@ -81,7 +106,55 @@
 
         </div>
         <div class="column">
-          <h2>Posts próximos a você</h2>
+          <div class="box">
+            <h2 class="is-spaced title">
+              Posts próximos a você
+            </h2>
+
+            <hr>
+
+            <b-field>
+                <b-select v-model="qtsAreaPosts" placeholder="Quantidade" icon="explore" @change="updateAreaPosts(qtsAreaPosts)">
+                  <option value="1000" selected>1km</option>
+                  <option value="2000">2km</option>
+                  <option value="3000">3km</option>
+                  <option value="4000">4km</option>
+                  <option value="5000">5km</option>
+                </b-select>
+            </b-field>
+
+            <div class="card mb-1" v-for="(post, index) in arPosts">
+              <div class="card-image">
+                <figure class="image is-4by3">
+                  <img :src="post.images.standard_resolution.url" alt="Image">
+                </figure>
+              </div>
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <figure class="image is-48x48">
+                      <img :src="post.user.profile_picture" alt="Image">
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">{{post.user.full_name}}</p>
+                    <p class="subtitle is-6">{{post.user.full_name}}</p>
+                  </div>
+                </div>
+                <div class="content">
+                  <p>{{post.caption.text}}</p>
+                  <p class="is-light">
+                    <small class="is-primary">
+                      <b-icon icon="location_city" size="is-small" type="is-primary"></b-icon> {{post.location.name}}</small> | 
+                    <small>
+                      <b-icon icon="date_range" size="is-small" type="is-primary"></b-icon> {{ parseInstaDate(post.created_time) }}
+                    </small>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>          
         </div>
       </div>
 
@@ -106,7 +179,9 @@
     verifyUser,
     logout,
     myLastPosts,
-    parseInstaDate
+    parseInstaDate,
+    areaPosts,
+    updateAreaPosts
   } from '../utils/methods'
 
   import UserStore from '../services/user'
@@ -118,6 +193,8 @@
         msg: 'Home',
         appLogo: 'static/img/instagram-logo-black.png',
         accessToken: null,
+        qtsMyPosts: 15,
+        qtsAreaPosts: 1000,
         user: {
           userId: null,
           userAvatar: null,
@@ -127,7 +204,10 @@
           userFollows: null,
           userPosts: null
         },
-        myPosts: null
+        myPosts: null,
+        arPosts: null,
+        seTags: null,
+        tagInput: ''
       }
     },
     beforeCreate () {
@@ -137,27 +217,30 @@
       if (!UserStore.getItem('latitude') || !UserStore.getItem('longitude')) {
         UserStore.getGetLocation(UserStore)
       }
-      console.log(UserStore.getItem('token'))
-      console.log(UserStore.getItem('latitude'))
-      console.log(UserStore.getItem('longitude'))
+      // console.log(UserStore.getItem('token'))
+      // console.log(UserStore.getItem('latitude'))
+      // console.log(UserStore.getItem('longitude'))
     },
     mounted () {
-      // if (UserStore.get('app')) {
-      //   console.log('ssss')
-      //   UserStore.remove('app')
-      // }
-      // console.log(this.parseInstaDate(1482359256))
       this.myLastPosts(UserStore.getItem('token'), this)
+      this.areaPosts(
+        UserStore.getItem('token'),
+        UserStore.getItem('latitude'),
+        UserStore.getItem('longitude'),
+        5000,
+        this
+      )
     },
     methods: {
       preventer,
       verifyUser,
       logout,
       myLastPosts,
-      parseInstaDate
+      parseInstaDate,
+      areaPosts,
+      updateAreaPosts
     }
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss"></style>

@@ -5,6 +5,7 @@ import UserStore from '../services/user'
 import Auth from '@/components/Auth'
 import Login from '@/components/Login'
 import Home from '@/components/Home'
+import Tag from '@/components/Tag'
 
 Vue.use(Router)
 
@@ -20,6 +21,18 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home,
+      beforeEnter: (to, from, next) => {
+        if (!UserStore.getItem('token')) {
+          next('/login')
+        } else {
+          next()
+        }
+      }
+    },
+    {
+      path: '/tag/:tag',
+      name: 'Tag',
+      component: Tag,
       beforeEnter: (to, from, next) => {
         if (!UserStore.getItem('token')) {
           next('/login')
