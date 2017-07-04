@@ -86,11 +86,12 @@
       }
     },
     beforeCreate () {
-      verifyUser(localStorage.getItem('token'), this)
-      // if () {
-
-      // }
-      console.log(UserStore.getItem('token'))
+      // Get User Profile Data
+      verifyUser(UserStore.getItem('token'), this)
+      // Get Geolocation
+      if (!UserStore.getItem('latitude') || !UserStore.getItem('longitude')) {
+        UserStore.getGetLocation(UserStore)
+      }
     },
     mounted () {
       // if (UserStore.get('app')) {
