@@ -4,7 +4,7 @@ class UserStore {
   get userData () {
     return {
       clientId: 'dc0f03d7620e49f2920315a8efd26b90',
-      redirectUri: 'http://localhost:8080/auth',
+      redirectUri: window.location.origin + '/auth',
       responseType: 'token',
       scope: 'public_content'
     }
