@@ -2,10 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import UserStore from '../services/user'
 
-import Auth from '@/components/Auth'
-import Login from '@/components/Login'
-import Home from '@/components/Home'
-import Tag from '@/components/Tag'
+import Auth from '../components/Auth'
+import Login from '../components/Login'
+import Home from '../components/Home'
+import Tag from '../components/Tag'
 
 Vue.use(Router)
 
