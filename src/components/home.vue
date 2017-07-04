@@ -19,7 +19,7 @@
       </div>
     </nav>
 
-    <div class="container profile">
+    <div class="container profile mb-2">
 
       <div class="section profile-heading mb-1">
         <div class="columns">
@@ -49,11 +49,53 @@
         </div>
       </div>
 
-      <div class="box">
-      aa
+      <hr class="mb-2">
+
+      <div class="columns">
+        <div class="column">
+
+          <div class="box">
+            <h2 class="title is-bold">Seus últimos posts</h2>
+
+            <div class="card mb-1" v-for="post in myPosts">
+              <div class="card-image">
+                <figure class="image is-4by3">
+                  <img :src="post.images.standard_resolution.url" alt="Image">
+                </figure>
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p>{{post.caption.text}}</p>
+                  <p class="is-light">
+                    <small class="is-primary">
+                      <b-icon icon="location_city" size="is-small" type="is-primary"></b-icon> {{post.location.name}}</small> | 
+                    <small>
+                      <b-icon icon="date_range" size="is-small" type="is-primary"></b-icon> {{ parseInstaDate(post.created_time) }}
+                    </small>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="column">
+          <h2>Posts próximos a você</h2>
+        </div>
       </div>
 
     </div>
+
+    <footer class="footer hero is-primary">
+      <div class="container">
+        <div class="content has-text-centered">
+          <p class="has-text-white">© 2017 Instagram
+          </p>
+        </div>
+      </div>
+    </footer>
+
   </div>
 </template>
 
@@ -62,7 +104,9 @@
   import {
     preventer,
     verifyUser,
-    logout
+    logout,
+    myLastPosts,
+    parseInstaDate
   } from '../utils/methods'
 
   import UserStore from '../services/user'
@@ -82,7 +126,8 @@
           userFollowers: null,
           userFollows: null,
           userPosts: null
-        }
+        },
+        myPosts: null
       }
     },
     beforeCreate () {
@@ -92,17 +137,24 @@
       if (!UserStore.getItem('latitude') || !UserStore.getItem('longitude')) {
         UserStore.getGetLocation(UserStore)
       }
+      console.log(UserStore.getItem('token'))
+      console.log(UserStore.getItem('latitude'))
+      console.log(UserStore.getItem('longitude'))
     },
     mounted () {
       // if (UserStore.get('app')) {
       //   console.log('ssss')
       //   UserStore.remove('app')
       // }
+      // console.log(this.parseInstaDate(1482359256))
+      this.myLastPosts(UserStore.getItem('token'), this)
     },
     methods: {
       preventer,
       verifyUser,
-      logout
+      logout,
+      myLastPosts,
+      parseInstaDate
     }
   }
 </script>
