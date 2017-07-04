@@ -66,8 +66,6 @@ export default new Router({
         } else {
           next()
         }
-        // }
-        // console.log(UserStore)
       }
     }
   ]

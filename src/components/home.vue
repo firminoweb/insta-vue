@@ -23,9 +23,7 @@
             </div>
           </span>
           <span class="nav-item">
-            <a class="button is-danger" @click="logout">
-              Log Out
-            </a>
+            <a class="button is-danger" id="logOut" @click="logout">Log Out</a>
           </span>
         </div>
       </div>
@@ -67,9 +65,7 @@
         <div class="column">
 
           <div class="box">
-            <h2 class="is-spaced title">
-              Seus últimos posts
-            </h2>
+            <h2 class="is-spaced title" id="lastpo">Seus últimos posts</h2>
 
             <hr>
 
@@ -93,9 +89,12 @@
                   <p v-if="post.caption">{{post.caption.text}}</p>
                   <p class="is-light">
                     <small class="is-primary" v-if="post.location">
-                      <b-icon icon="location_city" size="is-small" type="is-primary"></b-icon> {{post.location.name}}</small> | 
+                      <b-icon icon="location_city" size="is-small" type="is-primary"></b-icon> {{post.location.name}} | </small> 
                     <small>
-                      <b-icon icon="date_range" size="is-small" type="is-primary"></b-icon> {{ parseInstaDate(post.created_time) }}
+                      <b-icon icon="date_range" size="is-small" type="is-primary"></b-icon> {{ parseInstaDate(post.created_time) }} 
+                    </small>
+                    <small v-if="post.likes">
+                      | <b-icon icon="favorite" size="is-small" type="is-primary"></b-icon> {{post.likes.count}}
                     </small>
                   </p>
                 </div>
@@ -114,7 +113,7 @@
             <hr>
 
             <b-field>
-                <b-select v-model="qtsAreaPosts" placeholder="Quantidade" icon="explore" @change="updateAreaPosts(qtsAreaPosts)">
+                <b-select v-model="qtsAreaPosts" placeholder="Quantidade" icon="explore" @change.native="updateAreaPosts(qtsAreaPosts)">
                   <option value="1000" selected>1km</option>
                   <option value="2000">2km</option>
                   <option value="3000">3km</option>
@@ -145,9 +144,12 @@
                   <p>{{post.caption.text}}</p>
                   <p class="is-light">
                     <small class="is-primary">
-                      <b-icon icon="location_city" size="is-small" type="is-primary"></b-icon> {{post.location.name}}</small> | 
+                      <b-icon icon="location_city" size="is-small" type="is-primary"></b-icon> {{post.location.name}} | </small>
                     <small>
                       <b-icon icon="date_range" size="is-small" type="is-primary"></b-icon> {{ parseInstaDate(post.created_time) }}
+                    </small>
+                    <small v-if="post.likes">
+                      | <b-icon icon="favorite" size="is-small" type="is-primary"></b-icon> {{post.likes.count}}
                     </small>
                   </p>
                 </div>
@@ -217,9 +219,6 @@
       if (!UserStore.getItem('latitude') || !UserStore.getItem('longitude')) {
         UserStore.getGetLocation(UserStore)
       }
-      // console.log(UserStore.getItem('token'))
-      // console.log(UserStore.getItem('latitude'))
-      // console.log(UserStore.getItem('longitude'))
     },
     mounted () {
       this.myLastPosts(UserStore.getItem('token'), this)
@@ -227,7 +226,7 @@
         UserStore.getItem('token'),
         UserStore.getItem('latitude'),
         UserStore.getItem('longitude'),
-        5000,
+        1000,
         this
       )
     },

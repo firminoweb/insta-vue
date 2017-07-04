@@ -11,11 +11,11 @@
               <img :src="appLogo" alt="Logo" width="120">
             </div>
 
-            <div class="box">
+            <div class="box animated hingee fadeInDown">
 
               <a class="button is-primary is-fullwidth is-medium mb-1" @click="instaLogin">
                 <b-icon icon="person" size="is-medium"></b-icon>
-                <span>Log in with {{appName}}</span>
+                <span id="loginbtn">Log in com {{appName}}</span>
               </a>
 
               <div class="columns">

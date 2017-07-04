@@ -54,10 +54,8 @@ export function myLastPosts (access, context) {
       console.error(err.message)
     } else {
       context.myPosts = res.data
-      console.log(res.data)
     }
   })
-  // https://api.instagram.com/v1/users/self/media/recent/?count=5&access_token=20644171.dc0f03d.a986f2a34b964a709fd0105cf711bff6
 }
 
 export function updateAreaPosts (dist) {
@@ -70,7 +68,6 @@ export function areaPosts (access, lat, lng, dist, context) {
       console.error(err.message)
     } else {
       context.arPosts = res.data
-      console.log(res.data)
     }
   })
 }
@@ -84,6 +81,4 @@ export function searchTags (access, tag, context) {
       console.log('tags: ', res.data)
     }
   })
-  // https://api.instagram.com/v1/tags/search?q=snowy&
-  // https://api.instagram.com/v1/tags/{tag-name}/media/recent?access_token=ACCESS-TOKEN
 }
